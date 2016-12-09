@@ -78,7 +78,8 @@ class PasswordProtectExtension
                 // Set the session var, so we're authenticated..
                 $this->app['session']->set('passwordprotect', 1);
                 $this->app['session']->set('passwordprotect_name', $this->app['passwordprotect.handler.checker']->checkLogin($data));
-
+                $this->app['session']->save();
+                
                 // Print a friendly message..
                 printf("<p class='message-correct'>%s</p>", $this->config['message_correct']);
 
@@ -94,6 +95,7 @@ class PasswordProtectExtension
                 // Remove the session var, so we can test 'logging off'..
                 $this->app['session']->remove('passwordprotect');
                 $this->app['session']->remove('passwordprotect_name');
+                $this->app['session']->save();
 
                 // Print a friendly message..
                 if (!empty($data['password'])) {
